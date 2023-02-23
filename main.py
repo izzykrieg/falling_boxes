@@ -1,28 +1,22 @@
-import turtle, time
-from random import randint as r
+from turtle import*
+import random
 
 '''
 FUNCTIONS AND CLASS DEFINITIONS 
 '''
-class Falling_Object:
-	def __init__(self, shape, speed, color):
-		self.shape = shape
-		self.speed = speed
-		self.color = color
-
-	#def move():
-
-class Player:
-	def __init__(self, shape, speed, color):
-		self.shape = shape
-		self.speed = speed
-		self.color = color
-	
+def random_color():
+	color="#"
+	symbols="0123456789ABCDEF"
+	for i in range(6):
+		index=random.randint(0,15)
+		color+=symbols[index]
+	return color
+  
 def border():
-	b = turtle.Turtle()
+	b=Turtle()
 	b.speed(0)
 	b.ht()
-	b.bu()
+	b.pu()
 	b.width(10)
 	b.color("white")
 	b.goto(-110,200)
@@ -34,22 +28,51 @@ def border():
 		b.forward(400)
 		b.right(90)
 	b.end_fill()
+
+class Falling_Object(Turtle):
+  def __init__(self):
+    super().__init__()
+    self.shape=random.choice(["circle, square"])
+    self.speed=0
+    self.color=random_color()
+    x=random.randint(-150,150)
+    y=random.randint(200,300)
+    self.goto(x,y)
+  
+  def move(self):
+    self.seth(270)
+    self.forward(10)
+
+class Player:
+	def __init__(self):
+		self.shape="turtle"
+		self.speed=0
+		self.color=random_color()
+
+  #def move_
 	
-	
-	####### PROGRAM #############
-	# Creates screen object
-	
-	"""
-	PROGRAM
-	"""
-	
-	############ SCREEN ############
-	screen = turtle.Screen()
-	screen.bgcolor("black")
-	# the listen function notifies the program that it will need to be paying attention to inputs(key presses) from the user.
-	screen.listen()
-	
-	############ BORDER ##########
-	border()
-	
-	########## GAME LOOP #########
+####### PROGRAM #############
+# Creates screen object
+
+"""
+PROGRAM
+"""
+
+############ SCREEN ############
+screen=Screen()
+screen.bgcolor("black")
+# the listen function notifies the program that it will need to be paying attention to inputs(key presses) from the user.
+screen.listen()
+
+############ BORDER ##########
+border()
+
+########## GAME LOOP #########
+falling_objects=[]
+for i in range(10):
+  object=Falling_Object()
+  falling_objects.append(object)
+
+while True:
+  for object in falling_objects:
+    object.move
