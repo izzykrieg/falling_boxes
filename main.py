@@ -4,53 +4,62 @@ import random
 '''
 FUNCTIONS AND CLASS DEFINITIONS 
 '''
-def random_color():
-	color="#"
-	symbols="0123456789ABCDEF"
-	for i in range(6):
-		index=random.randint(0,15)
-		color+=symbols[index]
-	return color
-  
 def border():
-	b=Turtle()
-	b.speed(0)
-	b.ht()
-	b.pu()
-	b.width(10)
-	b.color("white")
-	b.goto(-110,200)
-	b.pendown()
-	b.begin_fill()
-	for i in range(2):
-		b.forward(220)
-		b.right(90)
-		b.forward(400)
-		b.right(90)
-	b.end_fill()
+  b=Turtle()
+  b.speed(0)
+  b.ht()
+  b.pu()
+  b.width(10)
+  b.color("white")
+  b.goto(-110,200)
+  b.pendown()
+  b.begin_fill()
+  for i in range(2):
+    b.forward(220)
+    b.right(90)
+    b.forward(400)
+    b.right(90)
+  b.end_fill()
 
 class Falling_Object(Turtle):
   def __init__(self):
     super().__init__()
-    self.shape=random.choice(["circle, square"])
-    self.speed=0
-    self.color=random_color()
+    self.hideturtle()
+    self.pu()
+    self.speed(0)
+    self.shape(random.choice(["circle", "square", "triangle"]))
+    self.color(random.choice(["orange", "pink", "yellow"]))
     x=random.randint(-150,150)
-    y=random.randint(200,300)
+    y=random.randint(200,600)
     self.goto(x,y)
+    self.seth(270)
   
   def move(self):
-    self.seth(270)
     self.forward(10)
+    if self.ycor()>-195 and self.xcor()>-195 and self.ycor()<195 and self.xcor()<195:
+      self.showturtle()
+    if self.ycor()<-195:
+      x=random.randint(-150,150)
+      y=random.randint(200,600)
+      self.goto(x,y)
 
-class Player:
-	def __init__(self):
-		self.shape="turtle"
-		self.speed=0
-		self.color=random_color()
+class Player(Turtle):
+  def __init__(self):
+    super().__init__()
+    self.speed(0)
+    self.shape("turtle")
+    self.color("light green")
+    self.goto(0,-180)
+    self.pu()
 
-  #def move_
-	
+  def move_left(self):
+    if self.xcor()>-195:
+      self.setx(self.xcor()-5)
+
+  def move_right(self):
+    if self.xcor()<195:
+      self.setx(self.xcor()+5)
+  
 ####### PROGRAM #############
 # Creates screen object
 
@@ -59,20 +68,24 @@ PROGRAM
 """
 
 ############ SCREEN ############
+player=Player()
 screen=Screen()
 screen.bgcolor("black")
 # the listen function notifies the program that it will need to be paying attention to inputs(key presses) from the user.
 screen.listen()
+screen.onkeypress(player.move_left,"Left")
+screen.onkeypress(player.move_right,"Right")
 
 ############ BORDER ##########
 border()
-
 ########## GAME LOOP #########
+
 falling_objects=[]
 for i in range(10):
   object=Falling_Object()
   falling_objects.append(object)
 
 while True:
-  for object in falling_objects:
-    object.move
+ for object in falling_objects:
+  object.move()
+  #if object.xcor()<-1
