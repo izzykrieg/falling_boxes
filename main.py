@@ -36,7 +36,7 @@ class Falling_Object(Turtle):
   
   def move(self):
     self.forward(10)
-    if self.ycor()>-195 and self.xcor()>-195 and self.ycor()<195 and self.xcor()<195:
+    if self.ycor()>-195 and self.xcor()>-105 and self.ycor()<195 and self.xcor()<105:
       self.showturtle()
     if self.ycor()<-195:
       x=random.randint(-150,150)
@@ -53,11 +53,11 @@ class Player(Turtle):
     self.pu()
 
   def move_left(self):
-    if self.xcor()>-195:
+    if self.xcor()>-105:
       self.setx(self.xcor()-5)
 
   def move_right(self):
-    if self.xcor()<195:
+    if self.xcor()<95:
       self.setx(self.xcor()+5)
   
 ####### PROGRAM #############
@@ -85,7 +85,20 @@ for i in range(10):
   object=Falling_Object()
   falling_objects.append(object)
 
+#score_objects=[]
+#score = 0
 while True:
  for object in falling_objects:
   object.move()
-  #if object.xcor()<-1
+  if object.ycor()<-195 or object.ycor()>195 or object.xcor()>105 or object.xcor()<-105:
+    object.hideturtle()
+    #object.write(str(object.pos()))
+  #if object.ycor()<-195 and object.ycor()>195 and object.xcor()>105 and object.xcor()<-105:
+  #  score_objects.append(object)
+    
+  if player.distance(object)<20:
+    player.hideturtle()
+  #  for object in score_objects:
+  #    if object.ycor()<-195:
+  #      score += 1
+  #break
